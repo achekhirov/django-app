@@ -26,7 +26,8 @@ SECRET_KEY = 'q%87768a8n0w-fwsp=m84b&z&=(m7s^nvqunm8axgr!1x#+s=f'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'Djangoapp3-env.eba-2eamyk3g.eu-north-1.elasticbeanstalk.com'
+    'Djangoapp3-env.eba-2eamyk3g.eu-north-1.elasticbeanstalk.com',
+    '172.31.24.87'
 ]
 
 
