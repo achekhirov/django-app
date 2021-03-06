@@ -25,7 +25,9 @@ SECRET_KEY = 'q%87768a8n0w-fwsp=m84b&z&=(m7s^nvqunm8axgr!1x#+s=f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'Djangoapp3-env.eba-2eamyk3g.eu-north-1.elasticbeanstalk.com'
+]
 
 
 # Application definition
@@ -78,12 +80,12 @@ WSGI_APPLICATION = 'portfolio.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': BASE_DIR / 'db.sqlite3',
+#    }
+#}
 
 
 # Password validation
