@@ -27,7 +27,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'Djangoapp3-env.eba-2eamyk3g.eu-north-1.elasticbeanstalk.com',
-    '172.31.24.87'
+    '172.31.24.87',
+    'djangoapp4-env.eba-tcthqrzw.eu-north-1.elasticbeanstalk.com'
 ]
 
 
