@@ -1,0 +1,11 @@
+html,
+body {
+  margin: 100;
+  padding: 100;
+  background-color: aquamarine;
+  font-size: x-large;
+}
+
+div {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
