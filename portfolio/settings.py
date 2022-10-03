@@ -26,9 +26,9 @@ SECRET_KEY = 'q%87768a8n0w-fwsp=m84b&z&=(m7s^nvqunm8axgr!1x#+s=f'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'Djangoapp3-env.eba-2eamyk3g.eu-north-1.elasticbeanstalk.com',
-    '172.31.24.87',
-    'djangoapp4-env.eba-tcthqrzw.eu-north-1.elasticbeanstalk.com',
+    'ec2-13-48-68-133.eu-north-1.compute.amazonaws.com',
+    '13.48.68.133',
+    '172.31.5.249',   
     '127.0.0.1'
 ]
 
@@ -115,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'UTC+3'
 
 USE_I18N = True
 
