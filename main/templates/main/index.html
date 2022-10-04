@@ -1,26 +1,6 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home page</title>
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-  <style>
-    #version {
-     bottom: 20px; /* Расстояние от нижнего края окна браузера */
-     position: absolute; /* Абсолютное позиционирование */
-     background: #f0f0f0; /* Цвет фона */
-     padding: 7px; /* Поля вокруг текста */
-     border: solid 1px black; /* Параметры рамки */
-    }
-   </style>
+{% extends 'main/base.html' %}
+{% block title %}Home | {% endblock %}
+{% block content %}
   <h1>Some shit</h1>
   <div>Some random shit</div>
-  <a href="/about">Go to 'About'</a>
-  <div id="version" >Version: 1.0.0</div>
-</body>
-</html>
+{% endblock %}
