@@ -1,30 +1,32 @@
 {% extends 'main/base.html' %}
-{% block title %}History | {% endblock %}
-{% block content %}
-<section class="hero">
-    <div class="hero-body">
-        <div class="container">
-            <section class="section">
-                <div class="columns">
-                    <div class="column is-8 is-offset-2">
-                        {% for post in posts %}
-                        <div class="content is-medium">
-                            <h2 class="subtitle is-4">{{ post.created_at|date:"d-M-Y" }}</h2>
-                            <h1 class="title">{{ post.version }} </h1>
-                            <p>{{ post.body }}</p>
-                    </div>
-                    {% endfor %}
-                    <form method="POST" class="mb-6">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <div class="field"><button class="button is-success">Add version</button></div>
-                </div>
-                </form>
+{% load static %}
 
-                </div>
-        </div>
+{% block title %}Version History | Alexeys Blog{% endblock %}
+
+
+{% block content %}
+<!-- Список версий -->
+{% for post in posts %}
+<article class="post">
+    <h2 class="post-date">{{ post.created_at|date:"d M Y" }}</h2>
+    <h1 class="post-title">{{ post.version }}</h1>
+    <div class="post-body">{{ post.body }}</div>
+</article>
+{% endfor %}
+
+
+<!-- Форма добавления версии -->
+<form method="POST" class="version-form">
+    {% csrf_token %}
+
+    <div class="form-group">
+        <label for="{{ form.version.id_for_label }}">Version</label>
+        {{ form.version }}
     </div>
+    <div class="form-group">
+        <label for="{{ form.body.id_for_label }}">Description</label>
+        {{ form.body }}
     </div>
-</section>
-</div>
+    <button type="submit" class="btn btn-primary">Add version</button>
+</form>
 {% endblock %}

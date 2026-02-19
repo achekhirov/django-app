@@ -1,11 +1,167 @@
-html,
-body {
-  margin: 100;
-  padding: 100;
-  background-color: aquamarine;
-  font-size: x-large;
+/* Общие настройки */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-div {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+body {
+  font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f9f9f9;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Шапка */
+.header {
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+  padding: 15px 0;
+}
+
+.header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  text-decoration: none;
+  color: #1e88e5;
+  font-size: 1.2rem;
+}
+
+/* Меню навигации */
+.nav {
+  display: flex;
+  gap: 20px;
+}
+
+.nav a {
+  color: #555;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav a:hover,
+.nav a.active {
+  color: #1e88e5;
+}
+
+/* Основной контент */
+.main {
+  padding: 40px 0;
+}
+
+/* Статьи */
+.post {
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px dashed #ddd;
+}
+
+.post-date {
+  color: #888;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.post-title {
+  margin: 10px 0;
+  font-size: 1.5rem;
+}
+
+.post-body {
+  color: #444;
+}
+
+/* Форма */
+.version-form {
+  margin-top: 40px;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #1e88e5;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Кнопка */
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #1e88e5;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background-color 0.3s, transform 0.1s;
+}
+
+.btn:hover {
+  background-color: #0d47a1;
+  transform: translateY(-1px);
+}
+
+/* Подвал */
+.footer {
+  background-color: #eee;
+  padding: 20px 0;
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+
+  .header .container,
+  .nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav {
+    margin-top: 15px;
+    gap: 10px;
+  }
 }
