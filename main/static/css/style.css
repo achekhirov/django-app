@@ -1,21 +1,35 @@
-/* Общие настройки */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+/* Общие настройки (без *!) */
 body {
+  margin: 0;
   font-family: 'Segoe UI', Tahoma, Verdana, sans-serif;
   line-height: 1.6;
   color: #333;
   background-color: #f9f9f9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+  padding-top: 20px;
+  /* Отступ от шапки */
+}
+
+footer {
+  padding: 2rem 0;
+  /* Вертикальные отступы */
+  background-color: #eee;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #666;
 }
 
 .container {
   max-width: 960px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 15px;
+  /* Меньше отступы для мобильных */
 }
 
 /* Шапка */
@@ -53,11 +67,6 @@ body {
 .nav a:hover,
 .nav a.active {
   color: #1e88e5;
-}
-
-/* Основной контент */
-.main {
-  padding: 40px 0;
 }
 
 /* Статьи */
@@ -140,28 +149,4 @@ textarea {
 .btn:hover {
   background-color: #0d47a1;
   transform: translateY(-1px);
-}
-
-/* Подвал */
-.footer {
-  background-color: #eee;
-  padding: 20px 0;
-  text-align: center;
-  color: #666;
-  font-size: 0.9rem;
-}
-
-/* Адаптивность */
-@media (max-width: 768px) {
-
-  .header .container,
-  .nav {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .nav {
-    margin-top: 15px;
-    gap: 10px;
-  }
 }

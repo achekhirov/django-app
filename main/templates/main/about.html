@@ -1,6 +1,35 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %}About | {% endblock %}
+
+
+{% block title %}About | Alexeys Blog{% endblock %}
+
+
 {% block content %}
-<h1>Some rubbish</h1><br>
+<section class="about-page">
+    <article class="content">
+        <h1 class="title">About this blog</h1>
+
+        <p class="lead">
+            You found yourself browsing the brilliant blog of Alexey The Great! Here Grandmaster Alexey shares notes on
+            web development, Python, and personal projects.
+        </p>
+        <p>
+            This site of Alexey built with Django, HTML5, and CSS3. Be sure he gives zero effort to keep it simple and
+            fast.
+        </p>
+        <p>
+            Due to his inbourn hostility and nihilism of Alexey, he discourages visiting <a href="{% url 'home' %}">home
+                page</a> or look at the
+            <a href="{% url 'versions' %}">version history</a>.
+        </p>
+    </article>
+
+    <!-- Ссылка «назад» -->
+    <div class="back-link">
+        <a href="{% url 'home' %}" class="button is-light">
+            ← Back to Hell
+        </a>
+    </div>
+</section>
 {% endblock %}

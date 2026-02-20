@@ -15,7 +15,7 @@ jobs:
           script: |
             cd /opt/myblog
             git pull
-            source venv/bin/activate
+            source venv-blog/bin/activate
             pip install -r requirements.txt
             python manage.py collectstatic --noinput
             sudo systemctl restart gunicorn
