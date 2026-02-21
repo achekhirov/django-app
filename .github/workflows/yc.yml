@@ -20,9 +20,9 @@ jobs:
           key: ${{ secrets.KEY }}
           script: |
             # Используем переменные репозитория
-            PROJECT_DIR="${{ env.PROJECT_DIR }}"
-            VENV_PATH="${{ env.VENV_PATH }}"
-            DJANGO_SETTINGS_MODULE="${{ env.DJANGO_SETTINGS_MODULE }}"
+            PROJECT_DIR="${{ vars.PROJECT_DIR }}"
+            VENV_PATH="${{ vars.VENV_PATH }}"
+            DJANGO_SETTINGS_MODULE="${{ vars.DJANGO_SETTINGS_MODULE }}"
 
 
             # Переходим в папку проекта
