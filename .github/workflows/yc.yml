@@ -13,14 +13,14 @@ jobs:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.2.5
         with:
-          host: ${{ vars.SERVER_HOST }}
+          host: ${{ env.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             # Используем переменные репозитория
-            PROJECT_DIR="${{ vars.PROJECT_DIR }}"
-            VENV_PATH="${{ vars.VENV_PATH }}"
-            DJANGO_SETTINGS_MODULE="${{ vars.DJANGO_SETTINGS_MODULE }}"
+            PROJECT_DIR="${{ env.PROJECT_DIR }}"
+            VENV_PATH="${{ env.VENV_PATH }}"
+            DJANGO_SETTINGS_MODULE="${{ env.DJANGO_SETTINGS_MODULE }}"
 
 
             # Переходим в папку проекта
