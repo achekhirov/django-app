@@ -3,25 +3,26 @@ name: Deploy Django App
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    env:
-      PROJECT_DIR: /home/achekhirov/django-app
-      VENV_PATH: /home/achekhirov/venv
-      SSH_HOST: $SERVER_HOST
-
     steps:
       - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1.2.5
+        uses: appleboy/ssh-action@v0.2.0
         with:
-          host: $SSH_HOST
+          host: ${{ vars.SERVER_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
+            # Используем переменные репозитория
+            PROJECT_DIR="${{ vars.PROJECT_DIR }}"
+            VENV_PATH="${{ vars.VENV_PATH }}"
+            DJANGO_SETTINGS_MODULE="${{ vars.DJANGO_SETTINGS_MODULE }}"
+
+
             # Переходим в папку проекта
             cd "$PROJECT_DIR" || { echo "Проект не найден: $PROJECT_DIR"; exit 1; }
 
@@ -31,7 +32,8 @@ jobs:
 
             # Обновляем код
             git reset --hard
-            git pull origin master
+            git pull origin main
+
 
             echo "Код обновлён"
 
@@ -40,7 +42,7 @@ jobs:
             source "$VENV_PATH/bin/activate"
 
 
-            echo "venv активирован: $(which python)"
+            echo "venv активирован: $VENV_PATH"
 
 
             # Устанавливаем зависимости
