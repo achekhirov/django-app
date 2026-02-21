@@ -33,7 +33,8 @@ jobs:
 
 
             # Обновляем код
-            git reset --hard
+            eval $(ssh-agent -s)
+            ssh-add ~/.ssh/blog
             git pull origin master
 
 
