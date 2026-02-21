@@ -1,21 +1,77 @@
-name: Deploy Blog
+name: Deploy Django App
+
 on:
   push:
-    branches: [master]
+    branches:
+      - master # ветка для деплоя
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
+      # 1. Checkout кода
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Настройка SSH
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/github_actions
+          chmod 600 ~/.ssh/github_actions
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+      # 3. Деплой на сервер
       - name: Deploy to Server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd /opt/myblog
-            git pull
-            source venv-blog/bin/activate
-            pip install -r requirements.txt
-            python manage.py collectstatic --noinput
-            sudo systemctl restart gunicorn
+        env:
+          PROJECT_DIR: ${{ secrets.PROJECT_DIR }}
+          VENV_PATH: ${{ secrets.VENV_PATH }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+        run: |
+          ssh -o StrictHostKeyChecking=no \
+            -i ~/.ssh/github_actions \
+            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
+            '/bin/bash -s' << 'EOF'
+
+
+          # Переходим в папку проекта
+          cd "$PROJECT_DIR" || { echo "Проект не найден"; exit 1; }
+
+
+          # Обновляем код
+          git fetch --all
+          git reset --hard origin/master
+
+
+          echo "Код обновлён"
+
+
+          # Активируем venv
+          source "$VENV_PATH/bin/activate"
+
+
+          echo "venv активирован"
+
+
+          # Устанавливаем зависимости
+          pip install -r requirements.txt
+          echo "Зависимости установлены"
+
+
+          # Собираем статику (если нужно)
+          python manage.py collectstatic --noinput
+          echo "Статика собрана"
+
+
+          # Применяем миграции
+          python manage.py migrate --noinput
+          echo "Миграции применены"
+
+
+          # Перезапускаем Gunicorn
+          sudo systemctl restart gunicorn.service
+          echo "Gunicorn перезапущен"
+
+
+          EOF
