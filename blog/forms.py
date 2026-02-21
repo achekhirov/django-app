@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Post
+from .models import Post, Task
 
 
 class PostForm(forms.ModelForm):
@@ -14,3 +14,11 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['version', 'body']  # укажите нужные поля
+
+class TaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ['title']
+        widgets = {
+            'title': forms.TextInput(attrs={'placeholder': 'What I am going to to next is...'})
+        }
