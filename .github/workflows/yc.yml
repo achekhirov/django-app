@@ -8,10 +8,12 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: yc
 
     steps:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.2.5
+
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
