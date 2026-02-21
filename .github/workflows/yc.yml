@@ -14,8 +14,8 @@ jobs:
         uses: appleboy/ssh-action@v0.2.0
         with:
           host: ${{ vars.SERVER_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_KEY }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             # Используем переменные репозитория
             PROJECT_DIR="${{ vars.PROJECT_DIR }}"
