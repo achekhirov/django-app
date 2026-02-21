@@ -12,12 +12,13 @@ jobs:
     env:
       PROJECT_DIR: /home/achekhirov/django-app
       VENV_PATH: /home/achekhirov/venv
+      SSH_HOST: $SERVER_HOST
 
     steps:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.2.5
         with:
-          host: ${{ SERVER_HOST }}
+          host: $SSH_HOST
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
