@@ -8,7 +8,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'blog.alexeychekhirov.net']
 
 
 INSTALLED_APPS = [
@@ -58,10 +58,22 @@ WSGI_APPLICATION = 'portfolio.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'blogdb',  # имя вашей базы
+        'USER': 'blog',     # пользователь MySQL
+        'PASSWORD': config('PASSWORD'), # пароль
+        'HOST': 'c-c9q34g8inr49i4r1obtk.rw.mdb.yandexcloud.net',  # FQDN/IP MySQL
+        'PORT': '3306',
+        # Опционально: SSL (если требует Yandex Cloud)
+        'OPTIONS': {
+            'ssl': {
+                'ca': '/home/achekhirov/.mysql/root.crt',  # если нужен сертификат
+            },
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
