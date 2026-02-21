@@ -3,75 +3,68 @@ name: Deploy Django App
 on:
   push:
     branches:
-      - master # ветка для деплоя
+      - master
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    env:
+      PROJECT_DIR: /home/achekhirov/django-app
+      VENV_PATH: /home/achekhirov/venv
+
     steps:
-      # 1. Checkout кода
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      # 2. Настройка SSH
-      - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/github_actions
-          chmod 600 ~/.ssh/github_actions
-          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
-
-      # 3. Деплой на сервер
-      - name: Deploy to Server
-        env:
-          PROJECT_DIR: ${{ secrets.PROJECT_DIR }}
-          VENV_PATH: ${{ secrets.VENV_PATH }}
-          SERVER_USER: ${{ secrets.SERVER_USER }}
-        run: |
-          ssh -o StrictHostKeyChecking=no \
-            -i ~/.ssh/github_actions \
-            ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} \
-            '/bin/bash -s' << 'EOF'
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v0.2.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            # Переходим в папку проекта
+            cd "$PROJECT_DIR" || { echo "Проект не найден: $PROJECT_DIR"; exit 1; }
 
 
-          # Переходим в папку проекта
-          cd "$PROJECT_DIR" || { echo "Проект не найден"; exit 1; }
+            echo "Текущий каталог: $(pwd)"
 
 
-          # Обновляем код
-          git fetch --all
-          git reset --hard origin/master
+            # Обновляем код
+            git reset --hard
+            git pull origin master
+
+            echo "Код обновлён"
 
 
-          echo "Код обновлён"
+            # Активируем venv
+            source "$VENV_PATH/bin/activate"
 
 
-          # Активируем venv
-          source "$VENV_PATH/bin/activate"
+            echo "venv активирован: $(which python)"
 
 
-          echo "venv активирован"
+            # Устанавливаем зависимости
+            pip install -r requirements.txt
 
 
-          # Устанавливаем зависимости
-          pip install -r requirements.txt
-          echo "Зависимости установлены"
+            echo "Зависимости установлены"
 
 
-          # Собираем статику (если нужно)
-          python manage.py collectstatic --noinput
-          echo "Статика собрана"
+            # Собираем статику
+            python manage.py collectstatic --noinput
 
 
-          # Применяем миграции
-          python manage.py migrate --noinput
-          echo "Миграции применены"
+            echo "Статика собрана"
 
 
-          # Перезапускаем Gunicorn
-          sudo systemctl restart gunicorn.service
-          echo "Gunicorn перезапущен"
+            # Применяем миграции
+            python manage.py migrate --noinput
 
 
-          EOF
+            echo "Миграции применены"
+
+
+            # Перезапускаем Gunicorn
+            sudo systemctl restart gunicorn.service
+
+
+            echo "Деплой завершён"
