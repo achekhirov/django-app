@@ -61,7 +61,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'blogdb',  # имя вашей базы
         'USER': 'blog',     # пользователь MySQL
-        'PASSWORD': config('PASSWORD'), # пароль
+        'PASSWORD': config('DB_PASSWORD'), # пароль
         'HOST': 'c-c9q34g8inr49i4r1obtk.rw.mdb.yandexcloud.net',  # FQDN/IP MySQL
         'PORT': '3306',
         # Опционально: SSL (если требует Yandex Cloud)
@@ -89,4 +89,5 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/home/achekhirov/django-app/static/'
+STATIC_ROOT = '/home/achekhirov/django-app/staticfiles/'
+LOGIN_REDIRECT_URL = 'versions'

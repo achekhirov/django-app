@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+
 from blog.models import Post
 from blog.forms import PostForm
 from django.http import HttpResponse
@@ -14,7 +16,7 @@ def home(request):
 def about(request):
     return render(request, "main/about.html")
 
-
+@login_required
 def versions(request):
     posts = Post.objects.all().order_by('-created_at')  # сортировка по дате
     form = PostForm()
@@ -32,6 +34,3 @@ def versions(request):
         {'posts': posts, 'form': form}
     )
 
-# Функция add() удалена — логика перенесена в versions()
-def test_view(request):
-    return HttpResponse("Test OK")
