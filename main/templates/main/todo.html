@@ -1,38 +1,39 @@
 {% extends 'main/base.html' %}
 {% load static %}
 
+{% block title %}To-Do List | Alexey's Blog{% endblock %}
 
 {% block content %}
-<div class="todo-container">
-    <h1>To‑Do List</h1>
+<div class="content-section todo-container">
+    <h1>To-Do List</h1>
 
-
-    <!-- Форма добавления задачи -->
+    <!-- Add task form -->
     <form method="post" class="add-task-form">
         {% csrf_token %}
         <input type="hidden" name="action" value="add">
-        <input type="text" name="title" placeholder="Enter a new task..." required>
-        <button type="submit">Add Task</button>
+        <div class="form-group">
+            <input type="text" name="title" class="form-control" placeholder="Enter a new task..." required
+                aria-label="New task description">
+        </div>
+        <button type="submit" class="btn btn-success">
+            Add Task
+        </button>
     </form>
 
-    <!-- Список задач -->
+    <!-- Task list -->
     {% if tasks %}
     <ul class="task-list">
         {% for task in tasks %}
         <li class="task-item {% if task.is_completed %}completed{% endif %}">
-            <!-- Чекбокс для отметки выполнения -->
-            <form method="post" style="display: inline;">
+            <form method="post" class="task-checkbox-form" style="display: inline;">
                 {% csrf_token %}
                 <input type="hidden" name="action" value="toggle">
                 <input type="hidden" name="task_id" value="{{ task.id }}">
-                <input type="checkbox" onchange="this.form.submit()" {% if task.is_completed %}checked{% endif %}>
+                <input type="checkbox" class="task-checkbox" onchange="this.form.submit()" {% if task.is_completed %}
+                    checked{% endif %} aria-label="Toggle completion for task: {{ task.title }}">
             </form>
-
             <span class="task-title">{{ task.title }}</span>
-
-
-            <!-- Кнопка удаления -->
-            <form method="post" style="display: inline;">
+            <form method="post" class="task-delete-form" style="display: inline;">
                 {% csrf_token %}
                 <input type="hidden" name="action" value="delete">
                 <input type="hidden" name="task_id" value="{{ task.id }}">
@@ -42,7 +43,9 @@
         {% endfor %}
     </ul>
     {% else %}
-    <p class="no-tasks">No tasks yet. Add your first task above!</p>
+    <div class="no-tasks">
+        <p>No tasks yet. Add your first task above!</p>
+    </div>
     {% endif %}
 </div>
 {% endblock %}

@@ -1,8 +1,38 @@
 {% extends 'main/base.html' %}
 {% load static %}
 
-{% block title %}Home | {% endblock %}
+{% block title %}Home | Alexey's Blog{% endblock %}
+
 {% block content %}
-<h1>Some shit</h1>
-<div>Some random shit</div>
+<section class="content-section">
+    <h1>Welcome to Alexey's Blog</h1>
+
+    <p class="lead">
+        A minimalist space for thoughts on web development, Python programming,
+        and occasional rants about technology.
+    </p>
+
+    <div class="mt-4">
+        <h2>What you'll find here:</h2>
+
+        <ul>
+            <li><strong>To-Do List</strong> - A simple task management tool</li>
+            <li><strong>Version History</strong> - Track project updates and changes</li>
+            <li><strong>Technical Notes</strong> - Insights on Django and web development</li>
+        </ul>
+    </div>
+
+    <div class="mt-4">
+        <p>
+            This blog is built with Django and focuses on simplicity and functionality
+            over flashy design. Everything you see is handcrafted with minimal dependencies.
+        </p>
+    </div>
+
+    <div class="mt-4">
+        <a href="{% url 'about' %}" class="btn">
+            Learn more about this blog →
+        </a>
+    </div>
+</section>
 {% endblock %}

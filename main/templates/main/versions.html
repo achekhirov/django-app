@@ -1,32 +1,42 @@
 {% extends 'main/base.html' %}
 {% load static %}
 
-{% block title %}Version History | Alexeys Blog{% endblock %}
-
+{% block title %}Version History | Alexey's Blog{% endblock %}
 
 {% block content %}
-<!-- Список версий -->
+<!-- Version list -->
 {% for post in posts %}
 <article class="post">
-    <h2 class="post-date">{{ post.created_at|date:"d M Y" }}</h2>
-    <h1 class="post-title">{{ post.version }}</h1>
-    <div class="post-body">{{ post.body }}</div>
+    <div class="post-date">{{ post.created_at|date:"d M Y" }}</div>
+    <h2 class="post-title">{{ post.version }}</h2>
+    <div class="post-body">{{ post.body|linebreaks }}</div>
 </article>
+{% empty %}
+<div class="no-posts">
+    <p>No version history yet. Add the first version below!</p>
+</div>
 {% endfor %}
 
+<!-- Add version form -->
+<div class="content-section">
+    <h3>Add New Version</h3>
 
-<!-- Форма добавления версии -->
-<form method="POST" class="version-form">
-    {% csrf_token %}
+    <form method="POST" class="form">
+        {% csrf_token %}
 
-    <div class="form-group">
-        <label for="{{ form.version.id_for_label }}">Version</label>
-        {{ form.version }}
-    </div>
-    <div class="form-group">
-        <label for="{{ form.body.id_for_label }}">Description</label>
-        {{ form.body }}
-    </div>
-    <button type="submit" class="btn btn-primary">Add version</button>
-</form>
+        <div class="form-group">
+            <label for="{{ form.version.id_for_label }}" class="form-label">Version</label>
+            {{ form.version }}
+        </div>
+
+        <div class="form-group">
+            <label for="{{ form.body.id_for_label }}" class="form-label">Description</label>
+            {{ form.body }}
+        </div>
+
+        <button type="submit" class="btn">
+            Add Version
+        </button>
+    </form>
+</div>
 {% endblock %}
