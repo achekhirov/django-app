@@ -3,6 +3,12 @@
 
 {% block title %}To-Do List | Alexey's Blog{% endblock %}
 
+{% block extrahead %}
+<!-- AJAX utilities -->
+<script src="{% static 'js/ajax.js' %}"></script>
+<script src="{% static 'js/todo.js' %}"></script>
+{% endblock %}
+
 {% block content %}
 <div class="content-section todo-container">
     <h1>To-Do List</h1>
@@ -13,9 +19,9 @@
         <input type="hidden" name="action" value="add">
         <div class="form-group">
             <input type="text" name="title" class="form-control" placeholder="Enter a new task..." required
-                aria-label="New task description">
+                aria-label="New task description" id="task-input">
         </div>
-        <button type="submit" class="btn btn-success">
+        <button type="submit" class="btn btn-success" id="add-task-btn">
             Add Task
         </button>
     </form>
@@ -24,20 +30,20 @@
     {% if tasks %}
     <ul class="task-list">
         {% for task in tasks %}
-        <li class="task-item {% if task.is_completed %}completed{% endif %}">
+        <li class="task-item {% if task.is_completed %}completed{% endif %}" id="task-{{ task.id }}">
             <form method="post" class="task-checkbox-form" style="display: inline;">
                 {% csrf_token %}
                 <input type="hidden" name="action" value="toggle">
                 <input type="hidden" name="task_id" value="{{ task.id }}">
-                <input type="checkbox" class="task-checkbox" onchange="this.form.submit()" {% if task.is_completed %}
-                    checked{% endif %} aria-label="Toggle completion for task: {{ task.title }}">
+                <input type="checkbox" class="task-checkbox" {% if task.is_completed %} checked{% endif %}
+                    aria-label="Toggle completion for task: {{ task.title }}">
             </form>
             <span class="task-title">{{ task.title }}</span>
             <form method="post" class="task-delete-form" style="display: inline;">
                 {% csrf_token %}
                 <input type="hidden" name="action" value="delete">
                 <input type="hidden" name="task_id" value="{{ task.id }}">
-                <button type="submit" class="delete-btn">[×]</button>
+                <button type="button" class="delete-btn">[×]</button>
             </form>
         </li>
         {% endfor %}
@@ -48,4 +54,17 @@
     </div>
     {% endif %}
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Initialize todo functionality when page loads
+    document.addEventListener('DOMContentLoaded', function () {
+        // Focus on task input
+        const taskInput = document.getElementById('task-input');
+        if (taskInput) {
+            taskInput.focus();
+        }
+    });
+</script>
 {% endblock %}

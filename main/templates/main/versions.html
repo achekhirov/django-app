@@ -3,10 +3,16 @@
 
 {% block title %}Version History | Alexey's Blog{% endblock %}
 
+{% block extrahead %}
+<!-- AJAX utilities -->
+<script src="{% static 'js/ajax.js' %}"></script>
+<script src="{% static 'js/versions.js' %}"></script>
+{% endblock %}
+
 {% block content %}
 <!-- Version list -->
 {% for post in posts %}
-<article class="post">
+<article class="post" id="post-{{ post.id }}">
     <div class="post-date">{{ post.created_at|date:"d M Y" }}</div>
     <h2 class="post-title">{{ post.version }}</h2>
     <div class="post-body">{{ post.body|linebreaks }}</div>
@@ -21,7 +27,7 @@
 <div class="content-section">
     <h3>Add New Version</h3>
 
-    <form method="POST" class="form">
+    <form method="POST" class="form" id="add-version-form">
         {% csrf_token %}
 
         <div class="form-group">
@@ -34,9 +40,22 @@
             {{ form.body }}
         </div>
 
-        <button type="submit" class="btn">
+        <button type="submit" class="btn" id="add-version-btn">
             Add Version
         </button>
     </form>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Initialize versions functionality when page loads
+    document.addEventListener('DOMContentLoaded', function () {
+        // Focus on version input
+        const versionInput = document.querySelector('input[name="version"]');
+        if (versionInput) {
+            versionInput.focus();
+        }
+    });
+</script>
 {% endblock %}
