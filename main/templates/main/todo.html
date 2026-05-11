@@ -35,8 +35,8 @@
                 {% csrf_token %}
                 <input type="hidden" name="action" value="toggle">
                 <input type="hidden" name="task_id" value="{{ task.id }}">
-                <input type="checkbox" class="task-checkbox" {% if task.is_completed %} checked{% endif %}
-                    aria-label="Toggle completion for task: {{ task.title }}">
+                <input type="checkbox" class="task-checkbox" {% if task.is_completed %}
+                    checked{% endif %} aria-label="Toggle completion for task: {{ task.title }}">
             </form>
             <span class="task-title">{{ task.title }}</span>
             <form method="post" class="task-delete-form" style="display: inline;">
@@ -58,13 +58,13 @@
 
 {% block scripts %}
 <script>
-    // Initialize todo functionality when page loads
-    document.addEventListener('DOMContentLoaded', function () {
-        // Focus on task input
-        const taskInput = document.getElementById('task-input');
-        if (taskInput) {
-            taskInput.focus();
-        }
-    });
+// Initialize todo functionality when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Focus on task input
+    const taskInput = document.getElementById('task-input');
+    if (taskInput) {
+        taskInput.focus();
+    }
+});
 </script>
 {% endblock %}

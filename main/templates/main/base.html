@@ -8,18 +8,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Alexey's Blog{% endblock %}</title>
 
+    <!-- Google Fonts - Modern Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
     <!-- Main CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-    <!-- Favicon -->
+    <!-- Favicon - Multiple formats for compatibility -->
     <link rel="icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'images/favicon.svg' %}" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="{% static 'images/favicon.svg' %}">
+
+    <!-- Theme Color for Mobile Browsers -->
+    <meta name="theme-color" content="#4361ee">
 
     {% block extrahead %}{% endblock %}
 </head>
 
 <body>
     <!-- Header -->
-    <header class="header" role="banner">
+    <header class="header" role="banner" id="main-header">
         <div class="container">
             <a class="logo" href="{% url 'home' %}" aria-label="Home page">
                 Alexey's Blog
@@ -73,25 +83,30 @@
         </div>
     </footer>
 
-    {% block scripts %}{% endblock %}
+    <!-- Modern Animations -->
+    <script src="{% static 'js/animations.js' %}"></script>
 
-    {% block yandex_metrika %}
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
-        (function (m, e, t, r, i, k, a) {
-            m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
-            m[i].l = 1 * new Date();
-            for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return; } }
-            k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
-        })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=109135359', 'ym');
+    <!-- Scroll effect for header -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.getElementById('main-header');
+            
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
 
-        ym(109135359, 'init', { ssr: true, webvisor: true, clickmap: true, referrer: document.referrer, url: location.href, accurateTrackBounce: true, trackLinks: true });
+            // Initialize scroll state
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            }
+        });
     </script>
-    <noscript>
-        <div><img src="https://mc.yandex.ru/watch/109135359" style="position:absolute; left:-9999px;" alt="" /></div>
-    </noscript>
-    <!-- /Yandex.Metrika counter -->
-    {% endblock %}
+
+    {% block scripts %}{% endblock %}
 </body>
 
 </html>
