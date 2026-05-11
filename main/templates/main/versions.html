@@ -10,18 +10,6 @@
 {% endblock %}
 
 {% block content %}
-<!-- Version list -->
-{% for post in posts %}
-<article class="post" id="post-{{ post.id }}">
-    <div class="post-date">{{ post.created_at|date:"d M Y" }}</div>
-    <h2 class="post-title">{{ post.version }}</h2>
-    <div class="post-body">{{ post.body|linebreaks }}</div>
-</article>
-{% empty %}
-<div class="no-posts">
-    <p>No version history yet. Add the first version below!</p>
-</div>
-{% endfor %}
 
 <!-- Add version form -->
 <div class="content-section">
@@ -45,17 +33,32 @@
         </button>
     </form>
 </div>
+
+<!-- Version list -->
+{% for post in posts %}
+<article class="post" id="post-{{ post.id }}">
+    <div class="post-date">{{ post.created_at|date:"d M Y" }}</div>
+    <h2 class="post-title">{{ post.version }}</h2>
+    <div class="post-body">{{ post.body|linebreaks }}</div>
+</article>
+{% empty %}
+<div class="no-posts">
+    <p>No version history yet. Add the first version below!</p>
+</div>
+{% endfor %}
+
+
 {% endblock %}
 
 {% block scripts %}
 <script>
-// Initialize versions functionality when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    // Focus on version input
-    const versionInput = document.querySelector('input[name="version"]');
-    if (versionInput) {
-        versionInput.focus();
-    }
-});
+    // Initialize versions functionality when page loads
+    document.addEventListener('DOMContentLoaded', function () {
+        // Focus on version input
+        const versionInput = document.querySelector('input[name="version"]');
+        if (versionInput) {
+            versionInput.focus();
+        }
+    });
 </script>
 {% endblock %}
