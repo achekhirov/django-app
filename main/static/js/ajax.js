@@ -27,8 +27,8 @@ function ajaxRequest(url, method, data, successCallback, errorCallback) {
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
     xhr.setRequestHeader('X-CSRFToken', csrftoken);
-
-    xhr.onload = function () {
+    
+    xhr.onload = function() {
         if (xhr.status >= 200 && xhr.status < 300) {
             try {
                 const response = JSON.parse(xhr.responseText);
@@ -41,16 +41,16 @@ function ajaxRequest(url, method, data, successCallback, errorCallback) {
             if (errorCallback) errorCallback(xhr);
         }
     };
-
-    xhr.onerror = function () {
+    
+    xhr.onerror = function() {
         if (errorCallback) errorCallback(xhr);
     };
-
+    
     // Convert data object to URL-encoded string
     const encodedData = Object.keys(data).map(key => {
         return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
     }).join('&');
-
+    
     xhr.send(encodedData);
 }
 
@@ -59,7 +59,7 @@ function showMessage(message, type = 'success') {
     // Remove existing messages
     const existingMessages = document.querySelectorAll('.ajax-message');
     existingMessages.forEach(msg => msg.remove());
-
+    
     // Create new message element
     const messageDiv = document.createElement('div');
     messageDiv.className = `ajax-message message message-${type}`;
@@ -74,7 +74,7 @@ function showMessage(message, type = 'success') {
         box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         animation: slideIn 0.3s ease-out;
     `;
-
+    
     // Add animation styles
     const style = document.createElement('style');
     style.textContent = `
@@ -88,9 +88,9 @@ function showMessage(message, type = 'success') {
         }
     `;
     document.head.appendChild(style);
-
+    
     document.body.appendChild(messageDiv);
-
+    
     // Auto-remove after 5 seconds
     setTimeout(() => {
         messageDiv.style.animation = 'fadeOut 0.3s ease-out';
